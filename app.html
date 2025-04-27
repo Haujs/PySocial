@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PySocial</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #f5f0ff; padding: 20px; }
+    .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
+    input, textarea, button { width: 100%; padding: 10px; margin: 8px 0; border-radius: 5px; border: 1px solid #ccc; }
+    button { background-color: #a288e3; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #7c5cd4; }
+    .user-entry { padding: 5px; background-color: #eee; margin-top: 5px; cursor: pointer; border-radius: 5px; }
+    .chat-box { border: 1px solid #ccc; padding: 10px; margin-top: 10px; border-radius: 5px; background: #f9f9ff; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    {% if action=='login' %}
+      <h2>Login / Register</h2>
+      <form action="/login" method="post">
+        <input name="username" placeholder="Username" required>
+        <input name="password" type="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+      <form action="/register" method="post">
+        <input name="username" placeholder="Username" required>
+        <input name="password" type="password" placeholder="Password" required>
+        <button type="submit">Register</button>
+      </form>
+    {% elif action=='profile' %}
+      <h2>Welcome, {{ session['username'] }}</h2>
+      {% if user['avatar'] %}
+        <img src="{{ user['avatar'] }}" class="avatar">
+      {% endif %}
+      <form action="/profile" method="post" enctype="multipart/form-data">
+        <textarea name="bio">{{ user['bio'] }}</textarea>
+        <input type="file" name="avatar">
+        <button type="submit">Update Profile</button>
+      </form>
+      <h3>Search Users</h3>
+      <form method="get" action="/search">
+        <input name="q" placeholder="Search username" required>
+        <button type="submit">Search</button>
+      </form>
+      {% if results %}
+        <h4>Results:</h4>
+        {% for result in results %}
+          <div class="user-entry" onclick="location.href='/chat/{{ result }}'">
+            {{ result }}
+          </div>
+        {% endfor %}
+      {% endif %}
+      <h3>Messages</h3>
+      {% if messages %}
+        <div class="chat-box">
+          {% for m in messages %}
+            <p><b>{{ m['from'] }}</b>: {{ m['message'] }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+      <form action="/send_message" method="post">
+        <input name="recipient" placeholder="Recipient" required>
+        <input name="message" placeholder="Message" required>
+        <button type="submit">Send</button>
+      </form>
+      <a href="/logout">Logout</a>
+    {% endif %}
+  </div>
+</body>
+</html>

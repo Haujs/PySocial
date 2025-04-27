@@ -1,0 +1,40 @@
+{
+  "users": {
+    "arseniy": {
+      "id": "cb4654f4-1343-435d-a321-c6d561083313",
+      "password": "arseniy",
+      "bio": "hi\r\n",
+      "avatar": "",
+      "admin": false
+    },
+    "grib": {
+      "id": "fcc51bfa-3afc-43fb-bd86-b2739f55c8e4",
+      "password": "grib",
+      "bio": "",
+      "avatar": "",
+      "admin": true
+    }
+  },
+  "messages": [
+    {
+      "from": "grib",
+      "to": "arseniy",
+      "message": "hi"
+    },
+    {
+      "from": "arseniy",
+      "to": "grib",
+      "message": "hi"
+    },
+    {
+      "from": "grib",
+      "to": "arseniy",
+      "message": "how are you?"
+    },
+    {
+      "from": "arseniy",
+      "to": "grib",
+      "message": "im good and you?"
+    }
+  ]
+}
